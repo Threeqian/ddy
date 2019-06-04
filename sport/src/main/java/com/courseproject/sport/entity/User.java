@@ -8,18 +8,26 @@ import java.io.Serializable;
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "user_id")//对应表中的列
+    @Column(name = "user_openid")//对应表中的列
     private String id;
     @Column(name = "user_name")
     private String name;
-    @Column(name = "user_count")
-    private String count;//微信账号
     @Column(name = "user_introduction")
     private String introduction;
     @Column(name = "user_tag")
     private String tag;
+    @Column(name = "user_evaluateScore")
+    private double score;
 
     public User() {
+    }
+
+    public User(String id, String name, String introduction, String tag, double score) {
+        this.id = id;
+        this.name = name;
+        this.introduction = introduction;
+        this.tag = tag;
+        this.score = score;
     }
 
     public String getId() {
@@ -38,14 +46,6 @@ public class User implements Serializable {
         this.name = name;
     }
 
-    public String getCount() {
-        return count;
-    }
-
-    public void setCount(String count) {
-        this.count = count;
-    }
-
     public String getIntroduction() {
         return introduction;
     }
@@ -60,5 +60,13 @@ public class User implements Serializable {
 
     public void setTag(String tag) {
         this.tag = tag;
+    }
+
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
     }
 }
