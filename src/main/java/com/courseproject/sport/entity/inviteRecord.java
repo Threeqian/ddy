@@ -1,17 +1,18 @@
 package com.courseproject.sport.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "invite_record")
-public class inviteRecord {
+public class inviteRecord implements Serializable {
     @Id
-    @Column(name = "user_id")
+    @OneToOne(targetEntity = User.class)
+    @JoinColumn(name = "user_id")
     private Integer userId;
-    @Column(name = "invite_id")
+
+    @OneToOne(targetEntity = inviteTable.class)
+    @JoinColumn(name = "invite_id")
     private Integer inviteId;
 
     public inviteRecord() {
