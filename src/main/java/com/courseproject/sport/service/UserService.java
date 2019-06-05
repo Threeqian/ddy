@@ -21,4 +21,14 @@ public class UserService {
         Optional<User> opu = userRepository.findById(uid);
         return opu.get();
     }
+
+    public User createUser(String uid, String name, String introduction, String tag, Double score){
+        User user = new User();
+        user.setId(uid);
+        user.setName(name);
+        user.setIntroduction(introduction);
+        user.setTag(tag);
+        user.setScore(score);
+        return user;
+    }
 }

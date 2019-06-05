@@ -1,7 +1,7 @@
 package com.courseproject.sport.controller;
 
 import com.courseproject.sport.dao.InviteRepository;
-import com.courseproject.sport.entity.inviteTable;
+import com.courseproject.sport.entity.InviteTable;
 import com.courseproject.sport.service.InviteTableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
@@ -25,7 +25,7 @@ public class InviteController {
     }
 
     @RequestMapping("/allinviteinfo")
-    public List<inviteTable> getAll(){
+    public List<InviteTable> getAll(){
         return inviteTableService.findAll();
     }
 
@@ -33,7 +33,7 @@ public class InviteController {
 
 
     @RequestMapping(value = "/createInvite",method = RequestMethod.POST)
-    public String createNewInvite(@Valid inviteTable i, Errors errors){
+    public String createNewInvite(@Valid InviteTable i, Errors errors){
         if(errors.hasErrors())
             return "createInvite";
         inviteRepository.save(i);

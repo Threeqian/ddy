@@ -5,17 +5,17 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "accept_info")
-public class acceptTable implements Serializable {
+public class AcceptTable implements Serializable {
     @Id
-    @OneToOne(targetEntity = inviteTable.class)
+    @OneToOne(targetEntity = InviteTable.class)
     @JoinColumn(name = "invite_id")
     private Integer inviteId;
 
     @OneToOne(targetEntity = User.class)
     @JoinColumn(name = "accepter_id")
-    private Integer accepterId;
+    private String accepterId;
 
-    public acceptTable() {
+    public AcceptTable() {
     }
 
     public Integer getInviteId() {
@@ -26,11 +26,11 @@ public class acceptTable implements Serializable {
         this.inviteId = inviteId;
     }
 
-    public Integer getAccepterId() {
+    public String getAccepterId() {
         return accepterId;
     }
 
-    public void setAccepterId(Integer accepterId) {
+    public void setAccepterId(String accepterId) {
         this.accepterId = accepterId;
     }
 }

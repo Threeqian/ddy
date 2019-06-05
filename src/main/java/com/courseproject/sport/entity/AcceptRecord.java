@@ -5,24 +5,24 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "accept_record")
-public class acceptRecord implements Serializable {
+public class AcceptRecord implements Serializable {
     @Id
     @OneToOne(targetEntity = User.class)
     @JoinColumn(name = "user_id")
-    private Integer userId;
+    private String userId;
 
-    @OneToOne(targetEntity = inviteTable.class)
+    @OneToOne(targetEntity = InviteTable.class)
     @JoinColumn(name = "accept_id")
     private Integer acceptId;
 
-    public acceptRecord() {
+    public AcceptRecord() {
     }
 
-    public Integer getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

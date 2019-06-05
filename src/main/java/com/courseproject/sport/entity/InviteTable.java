@@ -7,7 +7,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "invite_info")
-public class inviteTable {
+public class InviteTable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "invite_id")
@@ -39,7 +39,7 @@ public class inviteTable {
     @Column(name = "invite_sportType")
     private String sportType;
 
-    public inviteTable() {
+    public InviteTable() {
     }
 
     public Integer getId() {

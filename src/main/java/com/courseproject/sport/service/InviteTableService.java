@@ -1,7 +1,7 @@
 package com.courseproject.sport.service;
 
 import com.courseproject.sport.dao.InviteRepository;
-import com.courseproject.sport.entity.inviteTable;
+import com.courseproject.sport.entity.InviteTable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +9,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -19,9 +18,9 @@ public class InviteTableService {
     private InviteRepository inviteRepository;
 
     //返回有效日期的结果集
-    List<inviteTable> avalid(List<inviteTable> list){
-        List<inviteTable> validable = list;
-        for(inviteTable i:validable){
+    List<InviteTable> avalid(List<InviteTable> list){
+        List<InviteTable> validable = list;
+        for(InviteTable i:validable){
             try {
                 if(new SimpleDateFormat().parse(i.getValidDate()).before(new Date())){
                     validable.remove(i);
@@ -34,16 +33,16 @@ public class InviteTableService {
         return validable;
     }
 
-    public boolean createNewInvite(inviteTable s){
+    public boolean createNewInvite(InviteTable s){
         if(inviteRepository.save(s)!=null)
             return true;
         return false;
     }
-    public List<inviteTable> findAll(){
+    public List<InviteTable> findAll(){
         return avalid(inviteRepository.findAll());
     }
 
-    public List<inviteTable> findBySportType(String sportType){
+    public List<InviteTable> findBySportType(String sportType){
         return avalid(inviteRepository.findBySportType(sportType));
     }
 }
