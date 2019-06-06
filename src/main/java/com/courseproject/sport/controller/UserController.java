@@ -1,6 +1,5 @@
 package com.courseproject.sport.controller;
 
-import com.courseproject.sport.dao.UserRepository;
 import com.courseproject.sport.entity.User;
 import com.courseproject.sport.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +14,12 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserService userService;
-    @Autowired
-    private UserRepository userRepository;
 
+<<<<<<< Updated upstream
     @RequestMapping("/alluser")
+=======
+    @RequestMapping(value = "/alluser",method = RequestMethod.GET)
+>>>>>>> Stashed changes
     public List<User> getAll(){
         return userService.findAll();
     }
@@ -28,18 +29,16 @@ public class UserController {
      * @param uid
      * @return
      */
-    @RequestMapping("/{uid}/userinfo")
+    @RequestMapping(value = "/{uid}/userinfo",method = RequestMethod.GET)
     public User getUser(@PathVariable("uid") String uid){
         return userService.findUser(uid);
     }
 
     @RequestMapping(value = "/register",method = RequestMethod.POST)
-    public String createNewUser(@Valid User user, Errors errors){
+    public String createNewUser(@RequestBody @Valid User user, Errors errors){
         if(errors.hasErrors())
-            return "register";
-        userRepository.save(user);
+            return errors.toString();
+        userService.save(user);
         return "success";
     }
-
-
 }

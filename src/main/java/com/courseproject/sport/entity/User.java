@@ -1,15 +1,19 @@
 package com.courseproject.sport.entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "user_info")
 public class User implements Serializable {
+
     @Id
     @NotNull
-    @Column(name = "user_openid")//对应表中的列
+    @Column(name = "user_openid",unique = true)//对应表中的列
     private String id;
 
     @NotNull

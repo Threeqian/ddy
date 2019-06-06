@@ -2,6 +2,7 @@ package com.courseproject.sport.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.Future;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -32,10 +33,11 @@ public class InviteTable {
     @Column(name = "invite_number")
     private Integer number;
 
-    @NotNull
+    @NotBlank
     @Column(name = "invite_location")
     private String location;
 
+    @NotBlank
     @Column(name = "invite_sportType")
     private String sportType;
 
