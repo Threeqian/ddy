@@ -1,12 +1,7 @@
 package com.courseproject.sport.controller;
 
-<<<<<<< Updated upstream
-import com.courseproject.sport.dao.InviteRepository;
-import com.courseproject.sport.entity.InviteTable;
-=======
 import com.courseproject.sport.entity.InviteTable;
 import com.courseproject.sport.entity.User;
->>>>>>> Stashed changes
 import com.courseproject.sport.service.InviteTableService;
 import com.courseproject.sport.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +28,6 @@ public class InviteController {
         this.userService = userService;
     }
 
-<<<<<<< Updated upstream
-    @RequestMapping("/allinviteinfo")
-=======
     /**
      * 创建表的同时将表加入到创建者的发布记录表
      * @param inviteTable，邀请表对象
@@ -51,7 +43,6 @@ public class InviteController {
     }
 
     @RequestMapping(value = "/allinvite",method = RequestMethod.GET)
->>>>>>> Stashed changes
     public List<InviteTable> getAll(){
         return inviteTableService.findAll();
     }
@@ -68,10 +59,6 @@ public class InviteController {
         return inviteTableList;
     }
 
-<<<<<<< Updated upstream
-    @RequestMapping(value = "/createInvite",method = RequestMethod.POST)
-    public String createNewInvite(@Valid InviteTable i, Errors errors){
-=======
     @RequestMapping(value = "/inviteSortByLocation",method = RequestMethod.GET)
     public List<InviteTable> getAllByLocation(){
         List<InviteTable> inviteTableList = inviteTableService.findAll();
@@ -85,7 +72,6 @@ public class InviteController {
      */
     @RequestMapping("/acceptinvite")
     public String acceptInvite(@Valid InviteTable inviteTable, Errors errors){
->>>>>>> Stashed changes
         if(errors.hasErrors())
             return "acceptinvite";
         if(inviteTableService.findById(inviteTable.getId())!=null) {

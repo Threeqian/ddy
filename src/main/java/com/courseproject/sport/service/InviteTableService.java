@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -18,11 +19,7 @@ public class InviteTableService {
     private InviteRepository inviteRepository;
 
     //返回有效日期的结果集
-<<<<<<< Updated upstream
-    List<InviteTable> avalid(List<InviteTable> list){
-=======
     List<InviteTable> valid(List<InviteTable> list){
->>>>>>> Stashed changes
         List<InviteTable> validable = list;
         for(InviteTable i:validable){
             try {
@@ -36,19 +33,6 @@ public class InviteTableService {
         return validable;
     }
 
-<<<<<<< Updated upstream
-    public boolean createNewInvite(InviteTable s){
-        if(inviteRepository.save(s)!=null)
-            return true;
-        return false;
-    }
-    public List<InviteTable> findAll(){
-        return avalid(inviteRepository.findAll());
-    }
-
-    public List<InviteTable> findBySportType(String sportType){
-        return avalid(inviteRepository.findBySportType(sportType));
-=======
     InviteTable valid(InviteTable inviteTable){
         try {
             if(new SimpleDateFormat().parse(inviteTable.getValidDate()).before(new Date())){
@@ -74,6 +58,5 @@ public class InviteTableService {
     }
     public void updateNumber(Integer number,Integer vid){
         inviteRepository.updateNumber(number,vid);
->>>>>>> Stashed changes
     }
 }

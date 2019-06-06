@@ -10,13 +10,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface InviteRepository extends JpaRepository<InviteTable,Integer> {
-<<<<<<< Updated upstream
-    List<InviteTable> findAll();
-    List<InviteTable> findBySportType(String sportType);
-
-    @Override
-    InviteTable save(InviteTable s);
-=======
 
     List<InviteTable> findAll();
     Optional<InviteTable> findById(Integer vid);
@@ -27,5 +20,4 @@ public interface InviteRepository extends JpaRepository<InviteTable,Integer> {
     @Modifying
     @Query(value = "update invite_info set invite_info.number = :num where invite_info.id = :vid",nativeQuery = true)
     void updateNumber(@Param(value = "num") Integer number, @Param(value = "vid") Integer vid);
->>>>>>> Stashed changes
 }

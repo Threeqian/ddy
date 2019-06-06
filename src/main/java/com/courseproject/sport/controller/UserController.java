@@ -15,11 +15,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-<<<<<<< Updated upstream
-    @RequestMapping("/alluser")
-=======
     @RequestMapping(value = "/alluser",method = RequestMethod.GET)
->>>>>>> Stashed changes
     public List<User> getAll(){
         return userService.findAll();
     }
