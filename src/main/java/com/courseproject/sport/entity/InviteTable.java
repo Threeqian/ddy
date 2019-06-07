@@ -16,7 +16,7 @@ public class InviteTable {
 
     @OneToOne(targetEntity = User.class)
     @JoinColumn(name = "inviter_id")
-    private String inviter_id;
+    private String inviterId;
 
     @Column(name = "invite_description")
     private String description;
@@ -52,12 +52,12 @@ public class InviteTable {
         this.id = id;
     }
 
-    public String getInviter_id() {
-        return inviter_id;
+    public String getInviterId() {
+        return inviterId;
     }
 
-    public void setInviter_id(String inviter_id) {
-        this.inviter_id = inviter_id;
+    public void setInviterId(String inviterId) {
+        this.inviterId = inviterId;
     }
 
     public String getDescription() {

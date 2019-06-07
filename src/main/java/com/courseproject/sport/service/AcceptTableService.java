@@ -1,6 +1,6 @@
 package com.courseproject.sport.service;
 
-import com.courseproject.sport.dao.AcceptTableRepository;
+import com.courseproject.sport.dao.AcceptRepository;
 import com.courseproject.sport.entity.AcceptTable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,14 +10,18 @@ import java.util.List;
 @Service
 public class AcceptTableService {
     @Autowired
-    private AcceptTableRepository acceptTableRepository;
+    private AcceptRepository acceptRepository;
 
     public List<AcceptTable> findAll(){
-        return acceptTableRepository.findAll();
+        return acceptRepository.findAll();
     }
 
     public List<AcceptTable> findAllByInviteId(Integer vid){
-        return acceptTableRepository.findAllByInviteId(vid);
+        return acceptRepository.findAllByInviteId(vid);
+    }
+
+    public List<AcceptTable> findAllByAccepterId(String uid){
+        return acceptRepository.findAllByAccepterId(uid);
     }
 
     public AcceptTable CreateAcceptInfo(Integer vid, String uid){

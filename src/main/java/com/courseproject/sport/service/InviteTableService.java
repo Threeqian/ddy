@@ -44,12 +44,28 @@ public class InviteTableService {
         return inviteTable;
     }
 
+    public InviteTable CreateInviteTable(String uid, String sportType, String location, String description,
+                                         String announceDate, String validDate, Integer number){
+        InviteTable inviteTable = new InviteTable();
+        inviteTable.setInviterId(uid);
+        inviteTable.setSportType(sportType);
+        inviteTable.setLocation(location);
+        inviteTable.setAnnounceDate(announceDate);
+        inviteTable.setValidDate(validDate);
+        inviteTable.setNumber(number);
+        return inviteTable;
+    }
+
     public InviteTable save(InviteTable inviteTable){
         return inviteRepository.save(inviteTable);
     }
 
     public List<InviteTable> findAll(){
         return valid(inviteRepository.findAll());
+    }
+
+    public List<InviteTable> findAllByInviterId(String uid){
+        return inviteRepository.findAllByInviterId(uid);
     }
 
     public InviteTable findById(Integer vid){

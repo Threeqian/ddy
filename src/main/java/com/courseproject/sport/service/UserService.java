@@ -22,6 +22,16 @@ public class UserService {
         return opu.get();
     }
 
+    public User CreateUser(String uid, String name, String tag, String introduction, Double score){
+        User user = new User();
+        user.setId(uid);
+        user.setName(name);
+        user.setTag(tag);
+        user.setIntroduction(introduction);
+        user.setScore(score);
+        return user;
+    }
+
     public User save(User user){
         return userRepository.save(user);
     }
