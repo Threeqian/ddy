@@ -2,6 +2,7 @@ package com.courseproject.sport.service;
 
 import com.courseproject.sport.dao.InviteRepository;
 import com.courseproject.sport.entity.InviteTable;
+import com.courseproject.sport.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,15 +45,18 @@ public class InviteTableService {
         return inviteTable;
     }
 
-    public InviteTable CreateInviteTable(String uid, String sportType, String location, String description,
+    public InviteTable CreateInviteTable(User user, String sportType, String location, String description,
                                          String announceDate, String validDate, Integer number){
         InviteTable inviteTable = new InviteTable();
-        inviteTable.setInviterId(uid);
+        inviteTable.setInviter(user);//维护外键
         inviteTable.setSportType(sportType);
         inviteTable.setLocation(location);
+        inviteTable.setDescription(description);
         inviteTable.setAnnounceDate(announceDate);
         inviteTable.setValidDate(validDate);
         inviteTable.setNumber(number);
+
+        user.getInviteTables().add(inviteTable);//级联
         return inviteTable;
     }
 
@@ -65,7 +69,7 @@ public class InviteTableService {
     }
 
     public List<InviteTable> findAllByInviterId(String uid){
-        return inviteRepository.findAllByInviterId(uid);
+        return inviteRepository.findAllByInviter_Id(uid);
     }
 
     public InviteTable findById(Integer vid){

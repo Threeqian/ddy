@@ -1,11 +1,15 @@
 package com.courseproject.sport.entity;
 
-import javax.persistence.*;
-import javax.validation.constraints.Future;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
+import javax.persistence.*;
+import javax.validation.constraints.*;
+import java.util.HashSet;
+import java.util.Set;
+
+@Getter@Setter
 @Entity
 @Table(name = "invite_info")
 public class InviteTable {
@@ -14,9 +18,15 @@ public class InviteTable {
     @Column(name = "invite_id")
     private Integer id;
 
-    @OneToOne(targetEntity = User.class)
-    @JoinColumn(name = "inviter_id")
-    private String inviterId;
+    @OneToMany(mappedBy = "inviteTable", cascade = CascadeType.ALL)
+    private Set<AcceptTable> acceptTables = new HashSet<>();
+
+//    @OneToOne(targetEntity = User.class)
+//    @JoinColumn(name = "inviter_id")
+//    private String inviterId;
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "inviter_id",referencedColumnName = "user_openid")
+    private User inviter;
 
     @Column(name = "invite_description")
     private String description;
@@ -24,12 +34,12 @@ public class InviteTable {
     @Column(name = "announce_date")
     private String announceDate;
 
-    @Future
+    //@Future
     @Column(name = "valid_date")
     private String validDate;
 
     @NotNull
-    @Size(min = 1)
+    @Min(1)
     @Column(name = "invite_number")
     private Integer number;
 
@@ -42,69 +52,5 @@ public class InviteTable {
     private String sportType;
 
     public InviteTable() {
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getInviterId() {
-        return inviterId;
-    }
-
-    public void setInviterId(String inviterId) {
-        this.inviterId = inviterId;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getAnnounceDate() {
-        return announceDate;
-    }
-
-    public void setAnnounceDate(String announceDate) {
-        this.announceDate = announceDate;
-    }
-
-    public String getValidDate() {
-        return validDate;
-    }
-
-    public void setValidDate(String validDate) {
-        this.validDate = validDate;
-    }
-
-    public Integer getNumber() {
-        return number;
-    }
-
-    public void setNumber(Integer number) {
-        this.number = number;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getSportType() {
-        return sportType;
-    }
-
-    public void setSportType(String sportType) {
-        this.sportType = sportType;
     }
 }

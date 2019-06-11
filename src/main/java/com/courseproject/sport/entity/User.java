@@ -1,12 +1,16 @@
 package com.courseproject.sport.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
+@Getter@Setter
 @Entity
 @Table(name = "user_info")
 public class User implements Serializable {
@@ -14,7 +18,7 @@ public class User implements Serializable {
     @Id
     @NotNull
     @Column(name = "user_openid",unique = true)//对应表中的列
-    private String id;
+    String id;
 
     @NotNull
     @Column(name = "user_name")
@@ -29,46 +33,12 @@ public class User implements Serializable {
     @Column(name = "user_evaluateScore")
     private Double score;
 
+    @OneToMany(mappedBy = "inviter", cascade = CascadeType.ALL)
+    private Set<InviteTable> inviteTables = new HashSet<>();
+
+    @OneToMany(mappedBy = "accepter", cascade = CascadeType.ALL)
+    private Set<AcceptTable> acceptTables = new HashSet<>();
+
     public User() {
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getIntroduction() {
-        return introduction;
-    }
-
-    public void setIntroduction(String introduction) {
-        this.introduction = introduction;
-    }
-
-    public String getTag() {
-        return tag;
-    }
-
-    public void setTag(String tag) {
-        this.tag = tag;
-    }
-
-    public Double getScore() {
-        return score;
-    }
-
-    public void setScore(Double score) {
-        this.score = score;
     }
 }

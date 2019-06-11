@@ -2,6 +2,8 @@ package com.courseproject.sport.service;
 
 import com.courseproject.sport.dao.AcceptRepository;
 import com.courseproject.sport.entity.AcceptTable;
+import com.courseproject.sport.entity.InviteTable;
+import com.courseproject.sport.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,17 +19,21 @@ public class AcceptTableService {
     }
 
     public List<AcceptTable> findAllByInviteId(Integer vid){
-        return acceptRepository.findAllByInviteId(vid);
+        return acceptRepository.findAllByInviteTable_Id(vid);
     }
 
     public List<AcceptTable> findAllByAccepterId(String uid){
-        return acceptRepository.findAllByAccepterId(uid);
+        return acceptRepository.findAllByAccepter_Id(uid);
     }
 
-    public AcceptTable CreateAcceptInfo(Integer vid, String uid){
+    public AcceptTable CreateAcceptInfo(InviteTable inviteTable, User user){
         AcceptTable acceptTable = new AcceptTable();
-        acceptTable.setInviteId(vid);
-        acceptTable.setAccepterId(uid);
+        //维护外键
+        acceptTable.setInviteTable(inviteTable);
+        acceptTable.setAccepter(user);
+        //级联
+        inviteTable.getAcceptTables().add(acceptTable);
+        user.getAcceptTables().add(acceptTable);
         return acceptTable;
     }
 }

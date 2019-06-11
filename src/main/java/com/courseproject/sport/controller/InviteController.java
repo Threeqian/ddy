@@ -82,19 +82,19 @@ public class InviteController {
         return "success";
     }
 
-    @RequestMapping("/score")
-    public String score(Double score,Integer vid){
-        InviteTable inviteTable = findById(vid);
-        if(inviteTable!=null){
-            User user = userService.findUser(inviteTable.getInviter_id());
-            if(user != null){
-                userService.updateScore((user.getScore() + score)/2,user.getId());
-                return "success";
-            }
-            else
-                return "用户不存在！";
-        }
-        else
-            return "无效的表";
-    }
+//    @RequestMapping("/score")
+//    public String score(Double score,Integer vid){
+//        InviteTable inviteTable = findById(vid);
+//        if(inviteTable!=null){
+//            User user = userService.findUser(inviteTable.getInviterId());
+//            if(user != null){
+//                userService.updateScore((user.getScore() + score)/2,user.getId());
+//                return "success";
+//            }
+//            else
+//                return "用户不存在！";
+//        }
+//        else
+//            return "无效的表";
+//    }
 }

@@ -21,28 +21,28 @@ public class HistoryController {
     @Autowired
     private AcceptTableService acceptTableService;
 
-    @RequestMapping("/history/invitations")
-    public List<InviteTable> getUserAllInvitations(@Valid String uid, Errors errors){
-        if (errors.hasErrors()){
-            return null;
-        }
-        List<InviteTable> inviteTables = inviteTableService.findAllByInviterId(uid);
-        return inviteTables;
-    }
-
-    @RequestMapping("/history/acceptances")
-    public List<InviteTable> getUserAllAcceptances(@Valid String uid, Errors errors){
-        if (errors.hasErrors()){
-            return null;
-        }
-        List<AcceptTable> acceptTables = acceptTableService.findAllByAccepterId(uid);
-        if (acceptTables == null){
-            return null;
-        }
-        List<InviteTable> inviteTables = new ArrayList<>();
-        for (AcceptTable accept: acceptTables){
-            inviteTables.add(inviteTableService.findById(accept.getInviteId()));
-        }
-        return inviteTables;
-    }
+//    @RequestMapping("/history/invitations")
+//    public List<InviteTable> getUserAllInvitations(@Valid String uid, Errors errors){
+//        if (errors.hasErrors()){
+//            return null;
+//        }
+//        List<InviteTable> inviteTables = inviteTableService.findAllByInviterId(uid);
+//        return inviteTables;
+//    }
+//
+//    @RequestMapping("/history/acceptances")
+//    public List<InviteTable> getUserAllAcceptances(@Valid String uid, Errors errors){
+//        if (errors.hasErrors()){
+//            return null;
+//        }
+//        List<AcceptTable> acceptTables = acceptTableService.findAllByAccepterId(uid);
+//        if (acceptTables == null){
+//            return null;
+//        }
+//        List<InviteTable> inviteTables = new ArrayList<>();
+//        for (AcceptTable accept: acceptTables){
+//            inviteTables.add(inviteTableService.findById(accept.getInviteId()));
+//        }
+//        return inviteTables;
+//    }
 }
