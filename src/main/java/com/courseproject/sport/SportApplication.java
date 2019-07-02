@@ -14,6 +14,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 @SpringBootApplication
 public class SportApplication {
 
@@ -42,16 +45,19 @@ public class SportApplication {
             userRepo.save(user2);
             userRepo.save(user3);
 
+            String s1 = "2019-06-21 00:10:00", s2 = "2019-06-22 00:20:00", s3 = "2019-06-22 00:30:00";
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date d1 = sdf.parse(s1), d2 = sdf.parse(s2), d3 = sdf.parse(s3);
             InviteTableService inviteTableService = new InviteTableService();
             InviteTable inviteTable1 = inviteTableService.CreateInviteTable(user1, "ping-pong",
-                    "local","play ping-pong","20190601",
-                    "20190602",1),
+                    "local","play ping-pong",new java.sql.Date(d1.getTime()),
+                    2,1),
                     inviteTable2 = inviteTableService.CreateInviteTable(user2, "football",
-                            "local","play football","20190602",
-                            "20190602",12),
+                            "local","play football",new java.sql.Date(d2.getTime()),
+                            3,12),
                     inviteTable3 = inviteTableService.CreateInviteTable(user3, "table_tennis",
-                            "local","play table_tennis","20190602",
-                            "20190603",2);
+                            "local","play table_tennis",new java.sql.Date(d3.getTime()),
+                            4,2);
             inviteRepo.save(inviteTable1);
             inviteRepo.save(inviteTable2);
             inviteRepo.save(inviteTable3);
@@ -65,7 +71,6 @@ public class SportApplication {
             acceptRepo.save(acceptTable2);
             acceptRepo.save(acceptTable3);
             acceptRepo.save(acceptTable4);
-
         };
     }
 }

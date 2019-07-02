@@ -1,11 +1,15 @@
 package com.courseproject.sport.entity;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -32,11 +36,10 @@ public class InviteTable {
     private String description;
 
     @Column(name = "announce_date")
-    private String announceDate;
+    private Date announceDate;
 
-    //@Future
     @Column(name = "valid_date")
-    private String validDate;
+    private Integer validDay;
 
     @NotNull
     @Min(1)

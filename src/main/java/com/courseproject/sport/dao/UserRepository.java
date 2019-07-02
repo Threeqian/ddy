@@ -14,6 +14,8 @@ public interface UserRepository extends JpaRepository<User,String> {
 
     User save(User user);
 
+//    @Query("select user_openid,user_introdunction,user_name,user_evaluate_score,user_score from user_info")
+//    List<User> find();
     @Query(value = "update user_info set user_info .score= ?1 where user_info.id = ?2",nativeQuery = true)
     void updateScore(Double score,String uid);
 }

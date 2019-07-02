@@ -6,9 +6,7 @@ import com.courseproject.sport.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,41 +20,36 @@ public class InviteTableService {
     //返回有效日期的结果集
     List<InviteTable> valid(List<InviteTable> list){
         List<InviteTable> validable = list;
+        Date date = new Date(new java.util.Date().getTime());
         for(InviteTable i:validable){
-            try {
-                if(new SimpleDateFormat().parse(i.getValidDate()).before(new Date())){
-                    validable.remove(i);
-                }
-            } catch (ParseException e) {
-                e.printStackTrace();
+            long day = (date.getTime() - i.getAnnounceDate().getTime()) / (1000 * 3600 * 24);
+            if(i.getValidDay() > day){
+                validable.remove(i);
             }
         }
         return validable;
     }
 
     InviteTable valid(InviteTable inviteTable){
-        try {
-            if(new SimpleDateFormat().parse(inviteTable.getValidDate()).before(new Date())){
-                return null;
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        Date date = new Date(new java.util.Date().getTime());
+        long day = (date.getTime() - inviteTable.getAnnounceDate().getTime()) / (1000 * 3600 * 24);
+        if(inviteTable.getValidDay() > day)
+            return null;
         return inviteTable;
     }
 
     public InviteTable CreateInviteTable(User user, String sportType, String location, String description,
-                                         String announceDate, String validDate, Integer number){
+                                         Date announceDate, Integer validDay, Integer number){
         InviteTable inviteTable = new InviteTable();
         inviteTable.setInviter(user);//维护外键
         inviteTable.setSportType(sportType);
         inviteTable.setLocation(location);
         inviteTable.setDescription(description);
         inviteTable.setAnnounceDate(announceDate);
-        inviteTable.setValidDate(validDate);
+        inviteTable.setValidDay(validDay);
         inviteTable.setNumber(number);
 
-        user.getInviteTables().add(inviteTable);//级联
+        //user.getInviteTables().add(inviteTable);//级联
         return inviteTable;
     }
 
@@ -76,7 +69,7 @@ public class InviteTableService {
         Optional<InviteTable> opu = inviteRepository.findById(vid);
         return valid(opu.get());
     }
-    public void updateNumber(Integer number,Integer vid){
-        inviteRepository.updateNumber(number,vid);
+    public void updateNumber(Integer vid){
+        inviteRepository.updateNumber(0,vid);
     }
 }

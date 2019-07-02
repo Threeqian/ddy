@@ -32,8 +32,8 @@ public class AcceptTableService {
         acceptTable.setInviteTable(inviteTable);
         acceptTable.setAccepter(user);
         //级联
-        inviteTable.getAcceptTables().add(acceptTable);
-        user.getAcceptTables().add(acceptTable);
+        //inviteTable.getAcceptTables().add(acceptTable);
+        //user.getAcceptTables().add(acceptTable);
         return acceptTable;
     }
 }

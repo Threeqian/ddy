@@ -1,6 +1,6 @@
 package com.courseproject.sport.entity;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,6 +15,7 @@ public class AcceptTable implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "accept_id")
     private Integer acceptId;
+
 
     @ManyToOne(targetEntity = InviteTable.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "invite_id", referencedColumnName = "invite_id")

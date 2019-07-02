@@ -33,11 +33,11 @@ public class User implements Serializable {
     @Column(name = "user_evaluateScore")
     private Double score;
 
-    @OneToMany(mappedBy = "inviter", cascade = CascadeType.ALL)
-    private Set<InviteTable> inviteTables = new HashSet<>();
-
-    @OneToMany(mappedBy = "accepter", cascade = CascadeType.ALL)
-    private Set<AcceptTable> acceptTables = new HashSet<>();
+//    @OneToMany(mappedBy = "inviter", cascade = CascadeType.ALL)
+//    private Set<InviteTable> inviteTables = new HashSet<>();
+//
+//    @OneToMany(mappedBy = "accepter", cascade = CascadeType.ALL)
+//    private Set<AcceptTable> acceptTables = new HashSet<>();
 
     public User() {
     }
