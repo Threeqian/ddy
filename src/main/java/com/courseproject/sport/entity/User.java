@@ -24,20 +24,17 @@ public class User implements Serializable {
     @Column(name = "user_name")
     private String name;
 
+    @Column(name = "user_img")
+    private String userImg;
+
     @Column(name = "user_introduction")
     private String introduction;
 
     @Column(name = "user_tag")
     private String tag;
 
-    @Column(name = "user_evaluateScore")
+    @Column(name = "user_score")
     private Double score;
-
-//    @OneToMany(mappedBy = "inviter", cascade = CascadeType.ALL)
-//    private Set<InviteTable> inviteTables = new HashSet<>();
-//
-//    @OneToMany(mappedBy = "accepter", cascade = CascadeType.ALL)
-//    private Set<AcceptTable> acceptTables = new HashSet<>();
 
     public User() {
     }

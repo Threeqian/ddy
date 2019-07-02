@@ -22,10 +22,11 @@ public class UserService {
         return opu.get();
     }
 
-    public User CreateUser(String uid, String name, String tag, String introduction, Double score){
+    public User CreateUser(String uid, String name, String imgUrl, String tag, String introduction, Double score){
         User user = new User();
         user.setId(uid);
         user.setName(name);
+        user.setUserImg(imgUrl);
         user.setTag(tag);
         user.setIntroduction(introduction);
         user.setScore(score);

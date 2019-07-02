@@ -14,7 +14,7 @@ public interface InviteRepository extends JpaRepository<InviteTable,Integer> {
     List<InviteTable> findAll();
     Optional<InviteTable> findById(Integer vid);
 //    List<InviteTable> findAllByInviterId(String uid);
-    List<InviteTable> findAllByInviter_Id(String uid);
+    List<InviteTable> findAllByInviterId(String uid);
 
     @Override
     InviteTable save(InviteTable s);

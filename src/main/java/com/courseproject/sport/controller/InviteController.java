@@ -88,7 +88,7 @@ public class InviteController {
     public String score(Double score, Integer vid) {
         InviteTable inviteTable = findById(vid);
         if (inviteTable != null) {
-            User user = userService.findUser(inviteTable.getInviter().getId());
+            User user = userService.findUser(inviteTable.getInviterId());
             if (user != null) {
                 userService.updateScore((user.getScore() + score) / 2, user.getId());
                 return "success";

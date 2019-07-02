@@ -9,7 +9,7 @@ public interface AcceptRepository extends JpaRepository<AcceptTable, Integer> {
     List<AcceptTable> findAll();
 //    List<AcceptTable> findAllByInviteId(Integer vid);
 //    List<AcceptTable> findAllByAccepterId(String uid);
-    List<AcceptTable> findAllByInviteTable_Id(Integer vid);
-    List<AcceptTable> findAllByAccepter_Id(String uid);
+    List<AcceptTable> findAllByInviteId(Integer vid);
+    List<AcceptTable> findAllByAccepterId(String uid);
     AcceptTable save(AcceptTable acceptTable);
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,29 +20,29 @@ public class InviteTableService {
 
     //返回有效日期的结果集
     List<InviteTable> valid(List<InviteTable> list){
-        List<InviteTable> validable = list;
+        List<InviteTable> validatable = new ArrayList<>();
         Date date = new Date(new java.util.Date().getTime());
-        for(InviteTable i:validable){
+        for(InviteTable i: list){
             long day = (date.getTime() - i.getAnnounceDate().getTime()) / (1000 * 3600 * 24);
-            if(i.getValidDay() > day){
-                validable.remove(i);
+            if(i.getValidDay() >= day){
+                validatable.add(i);
             }
         }
-        return validable;
+        return validatable;
     }
 
     InviteTable valid(InviteTable inviteTable){
         Date date = new Date(new java.util.Date().getTime());
         long day = (date.getTime() - inviteTable.getAnnounceDate().getTime()) / (1000 * 3600 * 24);
-        if(inviteTable.getValidDay() > day)
+        if(inviteTable.getValidDay() < day)
             return null;
         return inviteTable;
     }
 
-    public InviteTable CreateInviteTable(User user, String sportType, String location, String description,
+    public InviteTable CreateInviteTable(String userId, String sportType, String location, String description,
                                          Date announceDate, Integer validDay, Integer number){
         InviteTable inviteTable = new InviteTable();
-        inviteTable.setInviter(user);//维护外键
+        inviteTable.setInviterId(userId);//维护外键
         inviteTable.setSportType(sportType);
         inviteTable.setLocation(location);
         inviteTable.setDescription(description);
@@ -62,7 +63,7 @@ public class InviteTableService {
     }
 
     public List<InviteTable> findAllByInviterId(String uid){
-        return inviteRepository.findAllByInviter_Id(uid);
+        return inviteRepository.findAllByInviterId(uid);
     }
 
     public InviteTable findById(Integer vid){

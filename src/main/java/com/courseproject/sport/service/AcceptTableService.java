@@ -19,21 +19,17 @@ public class AcceptTableService {
     }
 
     public List<AcceptTable> findAllByInviteId(Integer vid){
-        return acceptRepository.findAllByInviteTable_Id(vid);
+        return acceptRepository.findAllByInviteId(vid);
     }
 
     public List<AcceptTable> findAllByAccepterId(String uid){
-        return acceptRepository.findAllByAccepter_Id(uid);
+        return acceptRepository.findAllByAccepterId(uid);
     }
 
-    public AcceptTable CreateAcceptInfo(InviteTable inviteTable, User user){
+    public AcceptTable CreateAcceptInfo(Integer vid, String uid){
         AcceptTable acceptTable = new AcceptTable();
-        //维护外键
-        acceptTable.setInviteTable(inviteTable);
-        acceptTable.setAccepter(user);
-        //级联
-        //inviteTable.getAcceptTables().add(acceptTable);
-        //user.getAcceptTables().add(acceptTable);
+        acceptTable.setInviteId(vid);
+        acceptTable.setAccepterId(uid);
         return acceptTable;
     }
 }

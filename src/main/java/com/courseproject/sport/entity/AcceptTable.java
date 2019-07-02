@@ -16,14 +16,11 @@ public class AcceptTable implements Serializable {
     @Column(name = "accept_id")
     private Integer acceptId;
 
+    @Column(name = "invite_id")
+    private Integer inviteId;
 
-    @ManyToOne(targetEntity = InviteTable.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "invite_id", referencedColumnName = "invite_id")
-    private InviteTable inviteTable;
-
-    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "accepter_id", referencedColumnName = "user_openid")
-    private User accepter;
+    @Column(name = "accepter_id")
+    private String accepterId;
 
     public AcceptTable() {
     }

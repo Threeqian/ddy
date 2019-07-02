@@ -9,6 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,21 +17,22 @@ import java.util.Set;
 @Getter@Setter
 @Entity
 @Table(name = "invite_info")
-public class InviteTable {
+public class InviteTable implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "invite_id")
     private Integer id;
 
-    @OneToMany(mappedBy = "inviteTable", cascade = CascadeType.ALL)
-    private Set<AcceptTable> acceptTables = new HashSet<>();
+    @Column(name = "inviter_id")
+    private String inviterId;
 
-//    @OneToOne(targetEntity = User.class)
-//    @JoinColumn(name = "inviter_id")
-//    private String inviterId;
-    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "inviter_id",referencedColumnName = "user_openid")
-    private User inviter;
+    @NotBlank
+    @Column(name = "invite_sportType")
+    private String sportType;
+
+    @NotBlank
+    @Column(name = "invite_location")
+    private String location;
 
     @Column(name = "invite_description")
     private String description;
@@ -45,14 +47,6 @@ public class InviteTable {
     @Min(1)
     @Column(name = "invite_number")
     private Integer number;
-
-    @NotBlank
-    @Column(name = "invite_location")
-    private String location;
-
-    @NotBlank
-    @Column(name = "invite_sportType")
-    private String sportType;
 
     public InviteTable() {
     }
