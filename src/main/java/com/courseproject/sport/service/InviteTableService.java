@@ -49,8 +49,7 @@ public class InviteTableService {
         inviteTable.setAnnounceDate(announceDate);
         inviteTable.setValidDay(validDay);
         inviteTable.setNumber(number);
-
-        //user.getInviteTables().add(inviteTable);//级联
+        inviteTable.setIs_evaluate(0);
         return inviteTable;
     }
 

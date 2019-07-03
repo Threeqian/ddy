@@ -4,7 +4,10 @@
 use sport;
 
 # create tables
+drop table if exists accept_info;
+drop table if exists invite_info;
 drop table if exists user_info;
+
 create table user_info(
     user_openid varchar(28) not null,
     user_name varchar(20),
@@ -13,9 +16,8 @@ create table user_info(
     user_introduction varchar(255),
     user_score DOUBLE,
     PRIMARY KEY (user_openid)
-);
+)ENGINE = InnoDB DEFAULT CHAR SET = utf8;
 
-drop table if exists invite_info;
 create table invite_info(
     invite_id INT auto_increment,
     inviter_id varchar(28),
@@ -25,19 +27,22 @@ create table invite_info(
     announce_date DATETIME,
     valid_day INT,
     invite_number INT NOT NULL,
+    is_evaluate BOOLEAN not null default 0,
+    is_accept BOOLEAN not null default 0,
     PRIMARY KEY (invite_id),
-    FOREIGN KEY (inviter_id) REFERENCES user_info(user_openid)
-);
+    INDEX (inviter_id),
+    FOREIGN KEY (inviter_id) REFERENCES user_info(user_openid) ON DELETE CASCADE
+)ENGINE = InnoDB DEFAULT CHAR SET = utf8;
 
-drop table if exists accept_info;
 create table accept_info(
     accept_id INT auto_increment,
     invite_id INT,
     accepter_id varchar(28),
     PRIMARY KEY (accept_id),
-    FOREIGN KEY (accepter_id) REFERENCES user_info(user_openid),
-    FOREIGN KEY (invite_id)REFERENCES invite_info(invite_id)
-);
+    INDEX (accepter_id,invite_id),
+    FOREIGN KEY (accepter_id) REFERENCES user_info(user_openid) ON DELETE CASCADE,
+    FOREIGN KEY (invite_id)REFERENCES invite_info(invite_id) ON DELETE CASCADE
+)ENGINE = InnoDB DEFAULT CHAR SET = utf8;
 
 # initialize test data
 # insert user
@@ -72,12 +77,12 @@ values (null,'oB4nYjhJHQVaD0PL7qs0W1kL-_ls','table_tennis',
 # insert acceptation
 insert into accept_info (accept_id, invite_id, accepter_id)
 values (null,1,'oB4nYjvY13SVtaWC-AFztM2f3TlU');
+update invite_info set is_accept = 1 where invite_id = 1;
 
 insert into accept_info (accept_id, invite_id, accepter_id)
 values (null,2,'oB4nYjnoHhuWrPVi2pYLuPjnCaU0');
-
-insert into accept_info (accept_id, invite_id, accepter_id)
-values (null,2,'oB4nYjhJHQVaD0PL7qs0W1kL-_ls');
+update invite_info set is_accept = 1 where invite_id = 2;
 
 insert into accept_info (accept_id, invite_id, accepter_id)
 values (null,3,'oB4nYjvY13SVtaWC-AFztM2f3TlU');
+update invite_info set is_accept = 1 where invite_id = 3;

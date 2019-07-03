@@ -19,7 +19,7 @@ public class UserService {
 
     public User findUser(String uid){
         Optional<User> opu = userRepository.findById(uid);
-        return opu.get();
+        return opu.orElse(null);
     }
 
     public User CreateUser(String uid, String name, String imgUrl, String tag, String introduction, Double score){

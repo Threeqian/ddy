@@ -74,7 +74,7 @@ public class InviteController {
      * @return
      */
     @RequestMapping("/acceptinvite")
-    public String acceptInvite(@Valid InviteTable inviteTable, Errors errors) {
+    public String acceptInvite(@RequestBody @Valid InviteTable inviteTable, Errors errors) {
         if (errors.hasErrors())
             return "acceptinvite";
         if (inviteTableService.findById(inviteTable.getId()) != null) {

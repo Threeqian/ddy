@@ -27,7 +27,7 @@ public class InviteTable implements Serializable {
     private String inviterId;
 
     @NotBlank
-    @Column(name = "invite_sportType")
+    @Column(name = "invite_sport_type")
     private String sportType;
 
     @NotBlank
@@ -40,13 +40,21 @@ public class InviteTable implements Serializable {
     @Column(name = "announce_date")
     private Date announceDate;
 
-    @Column(name = "valid_date")
+    @Column(name = "valid_day")
     private Integer validDay;
 
     @NotNull
     @Min(1)
     @Column(name = "invite_number")
     private Integer number;
+
+    @NotNull
+    @Column(name = "is_evaluate")
+    private Integer is_evaluate;
+
+    @NotNull
+    @Column(name = "is_evaluate")
+    private Integer is_accept;
 
     public InviteTable() {
     }
