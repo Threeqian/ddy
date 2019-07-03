@@ -24,6 +24,8 @@ create table invite_info(
     invite_sport_type varchar(20),
     invite_location varchar(255),
     invite_description varchar(255),
+    start_time varchar(40),
+    finish_time varchar(40),
     announce_date DATETIME,
     valid_day INT,
     invite_number INT NOT NULL,
