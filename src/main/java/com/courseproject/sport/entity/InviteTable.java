@@ -1,7 +1,5 @@
 package com.courseproject.sport.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,8 +9,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 @Getter@Setter
 @Entity
@@ -49,12 +45,13 @@ public class InviteTable implements Serializable {
     private Integer number;
 
     @NotNull
-    @Column(name = "is_evaluate")
-    private Integer is_evaluate;
+    @Column(name = "is_evalute")
+    private Integer is_evaluate = 0;
 
     @NotNull
-    @Column(name = "is_evaluate")
-    private Integer is_accept;
+    @Column(name = "is_accept")
+    private Integer is_accept = 0;
+
 
     public InviteTable() {
     }

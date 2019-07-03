@@ -37,7 +37,4 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public void updateScore(Double score,String uid){
-        userRepository.updateScore(score,uid);
-    }
 }

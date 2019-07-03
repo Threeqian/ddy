@@ -2,6 +2,7 @@ package com.courseproject.sport.controller;
 
 import com.courseproject.sport.entity.InviteTable;
 import com.courseproject.sport.entity.User;
+import com.courseproject.sport.service.InviteTableService;
 import com.courseproject.sport.service.UserService;
 import com.courseproject.sport.util.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class UserController {
     @Autowired
     private HistoryController history;
     @Autowired
-    private InviteController inviteController;
+    private InviteTableService inviteTableService;
 
     @RequestMapping(value = "/alluser", method = RequestMethod.GET)
     public List<User> getAll() {
@@ -37,13 +38,14 @@ public class UserController {
         return userService.findUser(param.get("id"));
     }
 
-    @RequestMapping(value = "/register",method = RequestMethod.POST)
-    public String createNewUser(@RequestBody @Valid User user, Errors errors){
-        if(errors.hasErrors())
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public String createNewUser(@RequestBody @Valid User user, Errors errors) {
+        if (errors.hasErrors())
             return errors.toString();
         userService.save(user);
         return "success";
     }
+
 
     @RequestMapping(value = "/getopenid", method = RequestMethod.POST)
     public String getOpenId(@RequestBody Map<String, String> param) {
@@ -52,11 +54,11 @@ public class UserController {
     }
 
     @RequestMapping(value = "/gettingstart", method = RequestMethod.POST)
-    public Map<String, Object> getStart(@RequestBody Map<String, String> param){
+    public Map<String, Object> getStart(@RequestBody Map<String, String> param) {
         Map<String, Object> map = new HashMap<>();
         String uid = param.get("id");
         User user = getUser(param);
-        if (user == null){
+        if (user == null) {
             user = userService.CreateUser(uid, param.get("name"), param.get("img"),
                     "sport", "don't stop", 5.0);
             //userService.save(user);
@@ -66,10 +68,26 @@ public class UserController {
         map.put("invitations", inviteTables);
         List<InviteTable> acceptTables = history.getUserAllAcceptances(param);
         map.put("acceptances", acceptTables);
-        List<InviteTable> allInvite = inviteController.getAll();
-        if (allInvite.size() > 20)
-            allInvite = allInvite.subList(0,20);
+        List<InviteTable> allInvite = inviteTableService.findAll(Integer.valueOf(param.get("start")),Integer.valueOf(param.get("end")));
         map.put("allInvite", allInvite);
         return map;
+    }
+
+    /**
+     * 用户个人信息修改
+     *
+     * @param param  修改参数
+     * @return
+     */
+    @RequestMapping(value = "/modifyMessage")
+    public String modifyMessage(@RequestBody Map<String,String> param){
+        User user = userService.findUser(param.get("uid"));
+        if(user == null)
+            return "用户不存在";
+        user.setIntroduction(param.get("introduction"));
+        user.setTag(param.get("tag"));
+        userService.save(user);
+        return "success";
+
     }
 }

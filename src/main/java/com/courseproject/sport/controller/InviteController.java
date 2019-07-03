@@ -6,15 +6,10 @@ import com.courseproject.sport.service.InviteTableService;
 import com.courseproject.sport.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/ddy")
@@ -38,14 +33,17 @@ public class InviteController {
     @RequestMapping(value = "/createInvite", method = RequestMethod.POST)
     public String createNewInvite(@RequestBody @Valid InviteTable inviteTable, Errors errors) {
         if (errors.hasErrors())
-            return "createInvite";
+            return "param error";
         inviteTableService.save(inviteTable);
         return "success";
     }
 
+    /**
+     * @return 返回有效的邀请表
+     */
     @RequestMapping(value = "/allinvite", method = RequestMethod.GET)
-    public List<InviteTable> getAll() {
-        return inviteTableService.findAll();
+    public List<InviteTable> getAll(@RequestBody Map<String, Integer> param) {
+        return inviteTableService.findAll(param.get("start"), param.get("end"));
     }
 
 
@@ -53,16 +51,52 @@ public class InviteController {
         return inviteTableService.findById(vid);
     }
 
+    /**
+     * @return 返回按发布日期有效的邀请表
+     */
     @RequestMapping(value = "/inviteSortByAnnounceDate", method = RequestMethod.GET)
-    public List<InviteTable> getAllByAnnounceDate() {
-        List<InviteTable> inviteTableList = inviteTableService.findAll();
+    public List<InviteTable> getAllByAnnounceDate(@RequestBody Map<String, Object> param) {
+        List<InviteTable> inviteTableList = getAllByType((String) param.get("type"), (Integer) param.get("start"), (Integer) param.get("end"));
+
         Collections.sort(inviteTableList, Comparator.comparing(InviteTable::getAnnounceDate));
         return inviteTableList;
     }
 
-    @RequestMapping(value = "/inviteSortByLocation", method = RequestMethod.GET)
-    public List<InviteTable> getAllByLocation() {
-        List<InviteTable> inviteTableList = inviteTableService.findAll();
+    /**
+     * @return 返回按评分排序的有效邀请表
+     */
+    @RequestMapping(value = "/inviteSortByScore")
+    public List<InviteTable> getAllByScore(@RequestBody Map<String, Object> param) {
+        List<InviteTable> inviteTableList = getAllByType((String) param.get("type"), (Integer) param.get("start"), (Integer) param.get("end"));
+        Map<Double, InviteTable> map = new HashMap<>();
+
+        for (InviteTable inviteTable : inviteTableList) {
+            User user = userService.findUser(inviteTable.getInviterId());
+            map.put(user.getScore(), inviteTable);
+        }
+
+        Object[] key = map.keySet().toArray();
+        List<InviteTable> sortList = new ArrayList<>();
+        Arrays.sort(key);
+
+        for (int i = key.length - 1; i >= 0; i--) {
+            sortList.add(map.get(key[i]));
+        }
+        return sortList;
+    }
+
+    /**
+     * @return 返回按邀请人数排序的有效邀请表
+     */
+    @RequestMapping(value = "/inviteSortByNumber", method = RequestMethod.GET)
+    public List<InviteTable> getAllByNumber(@RequestBody Map<String, Object> param) {
+        List<InviteTable> inviteTableList = getAllByType((String) param.get("type"), (Integer) param.get("start"), (Integer) param.get("end"));
+        Collections.sort(inviteTableList, Comparator.comparing(InviteTable::getNumber));
+        return inviteTableList;
+    }
+
+    public List<InviteTable> getAllByType(String type, int start, int end) {
+        List<InviteTable> inviteTableList = inviteTableService.findAllByType(type, start, end);
         return inviteTableList;
     }
 
@@ -76,24 +110,37 @@ public class InviteController {
     @RequestMapping("/acceptinvite")
     public String acceptInvite(@RequestBody @Valid InviteTable inviteTable, Errors errors) {
         if (errors.hasErrors())
-            return "acceptinvite";
+            return "param error";
         if (inviteTableService.findById(inviteTable.getId()) != null) {
-            inviteTableService.updateNumber(inviteTable.getId());
+            inviteTable.setIs_evaluate(1);
+            inviteTableService.save(inviteTable);
         } else
             return "无效表";
         return "success";
     }
 
+    /**
+     * 给邀请表发起者评分
+     *
+     * @param param 分数
+     * @return
+     */
     @RequestMapping("/score")
-    public String score(Double score, Integer vid) {
-        InviteTable inviteTable = findById(vid);
+    public String score(@RequestBody Map<String, String> param) {
+        InviteTable inviteTable = findById(Integer.valueOf(param.get("vid")));
         if (inviteTable != null) {
-            User user = userService.findUser(inviteTable.getInviterId());
-            if (user != null) {
-                userService.updateScore((user.getScore() + score) / 2, user.getId());
-                return "success";
+            if (inviteTable.getIs_evaluate() == 0) {
+                User user = userService.findUser(inviteTable.getInviterId());
+                if (user != null) {
+                    double newScore = Double.parseDouble(param.get("score"));
+                    user.setScore((user.getScore() + newScore) / 2);
+                    userService.save(user);
+                    inviteTable.setIs_evaluate(1);
+                    return "success";
+                } else
+                    return "用户不存在！";
             } else
-                return "用户不存在！";
+                return "已评价";
         } else
             return "无效的表";
     }
