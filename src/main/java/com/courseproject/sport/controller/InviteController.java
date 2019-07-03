@@ -97,6 +97,9 @@ public class InviteController {
 
     public List<InviteTable> getAllByType(String type, int start, int end) {
         List<InviteTable> inviteTableList = inviteTableService.findAllByType(type, start, end);
+        for(InviteTable inviteTable:inviteTableList){
+            inviteTable.setUser(userService.findUser(inviteTable.getInviterId()));
+        }
         return inviteTableList;
     }
 

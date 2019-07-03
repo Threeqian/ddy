@@ -8,7 +8,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 @Getter@Setter
 @Entity
@@ -52,6 +52,13 @@ public class InviteTable implements Serializable {
     @Column(name = "is_accept")
     private Integer is_accept = 0;
 
+    @Column(name = "start_time")
+    private String startTime;
+
+    @Column(name = "finish_time")
+    private String finishTime;
+
+    private User user;
 
     public InviteTable() {
     }
