@@ -17,6 +17,7 @@ public class InviteTableService {
 
     @Autowired
     private InviteRepository inviteRepository;
+    private UserService userService;
 
     //返回有效日期的结果集
     List<InviteTable> valid(List<InviteTable> list) {
@@ -72,7 +73,11 @@ public class InviteTableService {
     }
 
     public List<InviteTable> findAllByInviterId(String uid) {
-        return inviteRepository.findAllByInviterId(uid);
+        List<InviteTable> list = inviteRepository.findAllByInviterId(uid);
+        for(InviteTable inviteTable:list){
+            inviteTable.setUser(userService.findUser(inviteTable.getInviterId()));
+        }
+        return list;
     }
 
     public List<InviteTable> findAllByType(String type,int start,int end) {
